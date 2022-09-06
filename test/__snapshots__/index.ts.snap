@@ -1,51 +1,59 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[` Deploy contract gas 1`] = `"897607 gas"`;
+exports[` Deploy contract gas 1`] = `"775174 gas"`;
 
-exports[` NativeCurrency withdraw nativeCurrency gas 1`] = `"31801 gas"`;
+exports[` NativeCurrency withdraw nativeCurrency gas 1`] = `"30385 gas"`;
 
-exports[` State and owner actions add and remove master gas 1`] = `"47788 gas"`;
+exports[` State and owner actions add and remove master gas 1`] = `"46318 gas"`;
 
-exports[` State and owner actions add and remove master gas 2`] = `"25882 gas"`;
+exports[` State and owner actions add and remove master gas 2`] = `"24395 gas"`;
 
-exports[` State and owner actions transferOwnership gas 1`] = `"28569 gas"`;
+exports[` State and owner actions transferOwnership gas 1`] = `"26997 gas"`;
 
-exports[` Token actions add user gas 1`] = `"95995 gas"`;
+exports[` Token actions add user gas 1`] = `"71816 gas"`;
 
-exports[` Token actions add user gas 2`] = `"78895 gas"`;
+exports[` Token actions add user gas 2`] = `"54716 gas"`;
 
-exports[` Token actions add user gas 3`] = `"78895 gas"`;
+exports[` Token actions add user gas 3`] = `"54716 gas"`;
 
-exports[` Token actions withdraw tokens 1 user gas 1`] = `"53076 gas"`;
+exports[` Token actions withdraw tokens 1 user gas 1`] = `"44491 gas"`;
 
-exports[` Token actions withdraw tokens 2 user gas 1`] = `"75290 gas"`;
+exports[` Token actions withdraw tokens 2 user gas 1`] = `"55084 gas"`;
 
-exports[` Token actions withdraw tokens 3 user gas 1`] = `"97504 gas"`;
+exports[` Token actions withdraw tokens 3 user gas 1`] = `"65677 gas"`;
 
-exports[` Token actions withdraw tokens 4 user gas 1`] = `"119719 gas"`;
+exports[` Token actions withdraw tokens 4 user gas 1`] = `"76377 gas"`;
 
-exports[` Token actions withdraw tokens 5 user gas 1`] = `"141933 gas"`;
+exports[` Token actions withdraw tokens 5 user gas 1`] = `"88692 gas"`;
 
-exports[` Token actions withdraw tokens 6 user gas 1`] = `"164148 gas"`;
+exports[` Token actions withdraw tokens 6 user gas 1`] = `"101008 gas"`;
 
-exports[` Token actions withdraw tokens 7 user gas 1`] = `"186364 gas"`;
+exports[` Token actions withdraw tokens 7 user gas 1`] = `"113324 gas"`;
 
-exports[` Token actions withdraw tokens 8 user gas 1`] = `"208583 gas"`;
+exports[` Token actions withdraw tokens 8 user gas 1`] = `"125643 gas"`;
 
-exports[` Token actions withdraw tokens 9 user gas 1`] = `"230799 gas"`;
+exports[` Token actions withdraw tokens 9 user gas 1`] = `"137960 gas"`;
 
-exports[` Token actions withdraw tokens 10 user gas 1`] = `"253016 gas"`;
+exports[` Token actions withdraw tokens 10 user gas 1`] = `"150276 gas"`;
 
-exports[` Token actions withdraw tokens 11 user gas 1`] = `"275233 gas"`;
+exports[` Token actions withdraw tokens 11 user gas 1`] = `"162593 gas"`;
 
-exports[` Token actions withdraw tokens 12 user gas 1`] = `"297450 gas"`;
+exports[` Token actions withdraw tokens 12 user gas 1`] = `"174911 gas"`;
 
-exports[` Token actions withdraw tokens 13 user gas 1`] = `"319668 gas"`;
+exports[` Token actions withdraw tokens 13 user gas 1`] = `"187228 gas"`;
 
-exports[` Token actions withdraw tokens 14 user gas 1`] = `"341886 gas"`;
+exports[` Token actions withdraw tokens 14 user gas 1`] = `"199547 gas"`;
 
-exports[` Token actions withdraw tokens 15 user gas 1`] = `"364105 gas"`;
+exports[` Token actions withdraw tokens 15 user gas 1`] = `"211865 gas"`;
 
-exports[` Token actions withdraw tokens 16 user gas 1`] = `"386327 gas"`;
+exports[` Token actions withdraw tokens 16 user gas 1`] = `"224187 gas"`;
 
-exports[` Token actions withdraw tokens 17 user gas 1`] = `"408546 gas"`;
+exports[` Token actions withdraw tokens 17 user gas 1`] = `"236506 gas"`;
+
+exports[` test 1`] = `"29679 gas"`;
+
+exports[` test 2`] = `"29679 gas"`;
+
+exports[` test 3`] = `"29679 gas"`;
+
+exports[` test 4`] = `"29679 gas"`;

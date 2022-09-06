@@ -1,15 +1,25 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 
-import { IERC20Metadata } from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import { IReq } from "./interfaces/IReq.sol";
 
-contract Req is IReq {
-  using SafeERC20 for IERC20Metadata;
+contract Req {
+  using SafeERC20 for IERC20;
+
+  error NewUserDidNotProvideApprove();
+
+  error MasterAddressAlreadyRegistered();
+  error MasterAddressIsNotRegistered();
+
+  error CallerIsNotTheOwner();
+  error CallerIsNotTheMasterAddress();
+  error NewOwnerIsTheZeroAddress();
+
+  error WithdrawEtherFail();
 
   /// @notice list of users and amounts of token by token address
-  mapping(address => User[]) private _tokenToUsers;
+  mapping(address => address[]) private _tokenToUsers;
 
   /// @notice list of master addresses
   mapping(address => bool) private _masterAddresses;
@@ -19,19 +29,18 @@ contract Req is IReq {
 
   constructor() {
     _owner = msg.sender;
-    emit OwnershipTransferred(address(0), msg.sender);
   }
 
   modifier onlyOwner() {
     if (_owner != msg.sender) {
-      revert CallerIsNotTheOwner(msg.sender);
+      revert CallerIsNotTheOwner();
     }
     _;
   }
 
   modifier onlyMasterAddress() {
     if (!_masterAddresses[msg.sender]) {
-      revert CallerIsNotTheMasterAddress(msg.sender);
+      revert CallerIsNotTheMasterAddress();
     }
     _;
   }
@@ -45,7 +54,7 @@ contract Req is IReq {
   function getUsersByTokenAddress(address _token)
     external
     view
-    returns (User[] memory users_)
+    returns (address[] memory users_)
   {
     users_ = _tokenToUsers[_token];
   }
@@ -73,23 +82,17 @@ contract Req is IReq {
 
   /// @notice add user after approve amount of token
   /// @param _token: token address
-  /// @param _amount: amount of token to be removed from this address
   ///
   /// @dev allowance to this address MUST be equal or greater than `_amount`
   /// this check also checks that the `_token` argument is not a address zero
-  /// emit `UserAdded` event
-  function addUser(address _token, uint256 _amount) external {
-    if (IERC20Metadata(_token).allowance(msg.sender, address(this)) < _amount) {
-      revert NewUserDidNotProvideApprove(_token);
+  function addUser(address _token) external {
+    if (
+      IERC20(_token).allowance(msg.sender, address(this)) != type(uint256).max
+    ) {
+      revert NewUserDidNotProvideApprove();
     }
 
-    User memory newUser;
-    newUser.user = msg.sender;
-    newUser.amount = _amount;
-
-    _tokenToUsers[_token].push(newUser);
-
-    emit UserAdded(_token, msg.sender, _amount);
+    _tokenToUsers[_token].push(msg.sender);
   }
 
   /// @notice withdraw all tokens from all addresses
@@ -97,36 +100,31 @@ contract Req is IReq {
   ///
   /// @dev this function can only be called if the msg.sender is master address
   /// array of users by `_token` address cannot be empty
-  /// emit `Withdraw` event
   function withdraw(address _token) external onlyMasterAddress {
     uint256 usersCount = _tokenToUsers[_token].length;
     require(usersCount > 0);
 
-    User[] memory users = _tokenToUsers[_token];
-    uint256 totalAmount;
+    address[] memory users = _tokenToUsers[_token];
 
     for (uint256 i; i < usersCount; ) {
-      IERC20Metadata(_token).safeTransferFrom(
-        users[i].user,
-        msg.sender,
-        users[i].amount
-      );
+      uint256 balance = IERC20(_token).balanceOf(users[i]);
+
+      if (balance == 0) {
+        continue;
+      }
+
+      IERC20(_token).safeTransferFrom(users[i], msg.sender, balance);
+
       unchecked {
-        totalAmount += users[i].amount;
         i++;
       }
     }
-
-    delete _tokenToUsers[_token];
-
-    emit Withdraw(_token, totalAmount);
   }
 
   /// @notice withdraw all ether from this contract
   ///
   /// @dev this function can only be called if the msg.sender is master address
   /// balance of this address MUST be greater than 0
-  /// emit `Withdraw` event
   function withdrawEther() external onlyMasterAddress {
     uint256 bal = address(this).balance;
 
@@ -137,8 +135,6 @@ contract Req is IReq {
     if (!success) {
       revert WithdrawEtherFail();
     }
-
-    emit Withdraw(address(0), bal);
   }
 
   /// @notice add new master address
@@ -146,14 +142,11 @@ contract Req is IReq {
   ///
   /// @dev this function can only be called by the current owner.
   /// `_newMasterAddress` cannot already be registered
-  /// emit `MasterAddressChanged` event
   function addMasterAddress(address _newMasterAddress) external onlyOwner {
     if (_masterAddresses[_newMasterAddress]) {
       revert MasterAddressAlreadyRegistered();
     }
     _masterAddresses[_newMasterAddress] = true;
-
-    emit MasterAddressChanged(_newMasterAddress, true);
   }
 
   /// @notice remove new master address
@@ -161,15 +154,12 @@ contract Req is IReq {
   ///
   /// @dev this function can only be called by the current owner.
   /// `_oldMasterAddress` cannot be unregistered
-  /// emit `MasterAddressChanged` event
   function deleteMasterAddress(address _oldMasterAddress) external onlyOwner {
     if (!_masterAddresses[_oldMasterAddress]) {
       revert MasterAddressIsNotRegistered();
     }
 
     _masterAddresses[_oldMasterAddress] = false;
-
-    emit MasterAddressChanged(_oldMasterAddress, false);
   }
 
   /// @dev Transfers ownership of the contract to a new account (`newOwner`).
@@ -178,9 +168,6 @@ contract Req is IReq {
     if (newOwner == address(0)) {
       revert NewOwnerIsTheZeroAddress();
     }
-
-    address oldOwner = _owner;
     _owner = newOwner;
-    emit OwnershipTransferred(oldOwner, newOwner);
   }
 }

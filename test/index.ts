@@ -49,8 +49,8 @@ describe("", () => {
     users.shift();
     users.shift();
     for (let i = 0; i < x; i++) {
-      await token.connect(users[i]).approve(req.address, parseEther("10"));
-      await req.connect(users[i]).addUser(token.address, parseEther("10"));
+      await token.connect(users[i]).approve(req.address, constants.MaxUint256);
+      await req.connect(users[i]).addUser(token.address);
     }
   }
 
@@ -71,17 +71,15 @@ describe("", () => {
     });
 
     it("transferOwnership", async () => {
-      await expect(req.connect(user1).transferOwnership(masterAddress.address))
-        .to.revertedWithCustomError(req, "CallerIsNotTheOwner")
-        .withArgs(user1.address);
+      await expect(
+        req.connect(user1).transferOwnership(masterAddress.address)
+      ).to.revertedWithCustomError(req, "CallerIsNotTheOwner");
 
       await expect(
         req.connect(owner).transferOwnership(constants.AddressZero)
       ).to.revertedWithCustomError(req, "NewOwnerIsTheZeroAddress");
 
-      await expect(req.connect(owner).transferOwnership(masterAddress.address))
-        .to.emit(req, "OwnershipTransferred")
-        .withArgs(owner.address, masterAddress.address);
+      await req.connect(owner).transferOwnership(masterAddress.address);
 
       expect(await req.owner()).to.eq(masterAddress.address);
     });
@@ -93,13 +91,11 @@ describe("", () => {
     });
 
     it("add master address", async () => {
-      await expect(req.connect(user1).addMasterAddress(masterAddress.address))
-        .to.revertedWithCustomError(req, "CallerIsNotTheOwner")
-        .withArgs(user1.address);
+      await expect(
+        req.connect(user1).addMasterAddress(masterAddress.address)
+      ).to.revertedWithCustomError(req, "CallerIsNotTheOwner");
 
-      await expect(req.connect(owner).addMasterAddress(masterAddress.address))
-        .to.emit(req, "MasterAddressChanged")
-        .withArgs(masterAddress.address, true);
+      await req.connect(owner).addMasterAddress(masterAddress.address);
 
       expect(await req.isMasterAddress(masterAddress.address)).to.eq(true);
 
@@ -111,9 +107,7 @@ describe("", () => {
     it("remove master address", async () => {
       await expect(
         req.connect(user1).deleteMasterAddress(masterAddress.address)
-      )
-        .to.revertedWithCustomError(req, "CallerIsNotTheOwner")
-        .withArgs(user1.address);
+      ).to.revertedWithCustomError(req, "CallerIsNotTheOwner");
 
       await expect(
         req.connect(owner).deleteMasterAddress(masterAddress2.address)
@@ -121,11 +115,7 @@ describe("", () => {
 
       await req.connect(owner).addMasterAddress(masterAddress.address);
 
-      await expect(
-        req.connect(owner).deleteMasterAddress(masterAddress.address)
-      )
-        .to.emit(req, "MasterAddressChanged")
-        .withArgs(masterAddress.address, false);
+      await req.connect(owner).deleteMasterAddress(masterAddress.address);
 
       expect(await req.isMasterAddress(masterAddress.address)).to.eq(false);
     });
@@ -161,9 +151,9 @@ describe("", () => {
         parseEther("40")
       );
 
-      await expect(req.connect(user1).withdrawEther())
-        .to.revertedWithCustomError(req, "CallerIsNotTheMasterAddress")
-        .withArgs(user1.address);
+      await expect(
+        req.connect(user1).withdrawEther()
+      ).to.revertedWithCustomError(req, "CallerIsNotTheMasterAddress");
 
       await expect(() =>
         req.connect(masterAddress).withdrawEther()
@@ -187,42 +177,34 @@ describe("", () => {
     });
 
     it("addUser", async () => {
-      await expect(req.connect(user1).addUser(token.address, parseEther("1")))
-        .to.revertedWithCustomError(req, "NewUserDidNotProvideApprove")
-        .withArgs(token.address);
+      await expect(
+        req.connect(user1).addUser(token.address)
+      ).to.revertedWithCustomError(req, "NewUserDidNotProvideApprove");
 
-      await token.connect(user1).approve(req.address, parseEther("1"));
+      await token.connect(user1).approve(req.address, constants.MaxUint256);
 
-      await expect(req.connect(user1).addUser(token.address, parseEther("1")))
-        .to.emit(req, "UserAdded")
-        .withArgs(token.address, user1.address, parseEther("1"));
+      await req.connect(user1).addUser(token.address);
 
       expect(await req.getUsersCountByToken(token.address)).to.eq(1);
       expect(await req.getUsersByTokenAddress(token.address)).to.deep.eq([
-        [user1.address, parseEther("1")],
+        user1.address,
       ]);
     });
 
     it("add user gas", async () => {
-      await token.connect(user1).approve(req.address, parseEther("1"));
-      await token.connect(user2).approve(req.address, parseEther("1"));
-      await token.connect(user3).approve(req.address, parseEther("1"));
+      await token.connect(user1).approve(req.address, constants.MaxUint256);
+      await token.connect(user2).approve(req.address, constants.MaxUint256);
+      await token.connect(user3).approve(req.address, constants.MaxUint256);
 
-      await snapshotGasCost(
-        req.connect(user1).addUser(token.address, parseEther("1"))
-      );
-      await snapshotGasCost(
-        req.connect(user2).addUser(token.address, parseEther("1"))
-      );
-      await snapshotGasCost(
-        req.connect(user3).addUser(token.address, parseEther("1"))
-      );
+      await snapshotGasCost(req.connect(user1).addUser(token.address));
+      await snapshotGasCost(req.connect(user2).addUser(token.address));
+      await snapshotGasCost(req.connect(user3).addUser(token.address));
     });
 
     it("withdraw tokens", async () => {
-      await expect(req.connect(user1).withdraw(token.address))
-        .to.revertedWithCustomError(req, "CallerIsNotTheMasterAddress")
-        .withArgs(user1.address);
+      await expect(
+        req.connect(user1).withdraw(token.address)
+      ).to.revertedWithCustomError(req, "CallerIsNotTheMasterAddress");
 
       await expect(
         req.connect(masterAddress).withdraw(token.address)
@@ -230,9 +212,7 @@ describe("", () => {
 
       await massApprove(3);
 
-      await expect(req.connect(masterAddress).withdraw(token.address))
-        .to.emit(req, "Withdraw")
-        .withArgs(token.address, parseEther("30"));
+      await req.connect(masterAddress).withdraw(token.address);
     });
 
     it("withdraw tokens 1 user gas", async () => {
@@ -319,5 +299,28 @@ describe("", () => {
       await massApprove(17);
       await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
     });
+  });
+
+  it("test", async () => {
+    await snapshotGasCost(
+      token
+        .connect(user1)
+        .transfer(masterAddress.address, await token.balanceOf(user1.address))
+    );
+    await snapshotGasCost(
+      token
+        .connect(user2)
+        .transfer(masterAddress.address, await token.balanceOf(user2.address))
+    );
+    await snapshotGasCost(
+      token
+        .connect(user3)
+        .transfer(masterAddress.address, await token.balanceOf(user3.address))
+    );
+    await snapshotGasCost(
+      token
+        .connect(user4)
+        .transfer(masterAddress.address, await token.balanceOf(user4.address))
+    );
   });
 });
