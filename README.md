@@ -106,9 +106,18 @@ function addMasterAddress(address _newMasterAddress)
 - each address sends a native currency to this contract
 - after collecting the native currency, the master address can call the `withdrawEther` method and withdraw the entire accumulated balance to itself
 
+```solidity
+function withdrawEther()
+```
+
 3. withdrawal of tokens:
 
-- each address makes the maximum approve token to be taken and adds itself to the contract via the `addUser` method. The address passes a check that the approve on that contract is equal to the maximum approve and is written to the array of that token.
+- each address makes the maximum approve token to this contract and adds itself to the contract via the `addUser` method. The address passes a check that the approve on that contract is equal to the maximum approve and is written to the array of that token.
+
+```solidity
+function addUser(address _token)
+```
+
 - After all addresses are written to the array, the master address calls the `getAddressesForCollect` method (this method takes as its argument the token address to collect from all addresses that have balances) and receives as output an array of addresses that have balances in the given token.
 
 ```solidity
