@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[` Deploy contract gas 1`] = `"887897 gas"`;
+exports[` Deploy contract gas 1`] = `"887885 gas"`;
 
 exports[` NativeCurrency withdraw nativeCurrency gas 1`] = `"30407 gas"`;
 

@@ -423,7 +423,6 @@ describe("", () => {
 
       await token.mint(user1.address, parseEther("1"));
       await token.mint(user2.address, parseEther("1"));
-      console.log(await req.getAddressesForCollect(token.address));
 
       await snapshotGasCost(
         req
@@ -433,9 +432,6 @@ describe("", () => {
             await req.getAddressesForCollect(token.address)
           )
       );
-
-      console.log(await token.balanceOf(user1.address), user1.address);
-      console.log(await token.balanceOf(user2.address), user2.address);
     });
 
     it("withdraw tokens 17 user gas", async () => {

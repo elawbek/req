@@ -20,21 +20,6 @@ const config: HardhatUserConfig = {
     ],
   },
   networks: {
-    hardhat: {
-      forking: {
-        // url:
-        //   process.env.BNB_MAINNET_URL !== undefined
-        //     ? process.env.BNB_MAINNET_URL
-        //     : "",
-
-        url:
-          process.env.POLYGON_MAINNET_URL !== undefined
-            ? process.env.POLYGON_MAINNET_URL
-            : "",
-        blockNumber: 32794355,
-      },
-    },
-
     ethereum: {
       url:
         process.env.ETHEREUM_MAINNET_URL !== undefined

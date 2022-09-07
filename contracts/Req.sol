@@ -4,19 +4,10 @@ pragma solidity ^0.8.16;
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-contract Req {
+import { IReq } from "./interfaces/IReq.sol";
+
+contract Req is IReq {
   using SafeERC20 for IERC20;
-
-  error NewUserDidNotProvideApprove();
-
-  error MasterAddressAlreadyRegistered();
-  error MasterAddressIsNotRegistered();
-
-  error CallerIsNotTheOwner();
-  error CallerIsNotTheMasterAddress();
-  error NewOwnerIsTheZeroAddress();
-
-  error WithdrawEtherFail();
 
   /// @notice list of users and amounts of token by token address
   mapping(address => address[]) private _tokenToUsers;
@@ -46,7 +37,7 @@ contract Req {
   }
 
   /// @notice return the owner of contract
-  function owner() public view returns (address) {
+  function owner() external view returns (address) {
     return _owner;
   }
 
