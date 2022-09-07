@@ -203,101 +203,251 @@ describe("", () => {
 
     it("withdraw tokens", async () => {
       await expect(
-        req.connect(user1).withdraw(token.address)
+        req
+          .connect(user1)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
       ).to.revertedWithCustomError(req, "CallerIsNotTheMasterAddress");
 
       await expect(
-        req.connect(masterAddress).withdraw(token.address)
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
       ).to.revertedWithoutReason();
 
       await massApprove(3);
 
-      await req.connect(masterAddress).withdraw(token.address);
+      await req
+        .connect(masterAddress)
+        .withdraw(
+          token.address,
+          await req.getAddressesForCollect(token.address)
+        );
     });
 
     it("withdraw tokens 1 user gas", async () => {
       await massApprove(1);
-      await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
     });
 
     it("withdraw tokens 2 user gas", async () => {
       await massApprove(2);
-      await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
     });
 
     it("withdraw tokens 3 user gas", async () => {
       await massApprove(3);
-      await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
     });
 
     it("withdraw tokens 4 user gas", async () => {
       await massApprove(4);
-      await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
     });
 
     it("withdraw tokens 5 user gas", async () => {
       await massApprove(5);
-      await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
     });
 
     it("withdraw tokens 6 user gas", async () => {
       await massApprove(6);
-      await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
     });
 
     it("withdraw tokens 7 user gas", async () => {
       await massApprove(7);
-      await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
     });
 
     it("withdraw tokens 8 user gas", async () => {
       await massApprove(8);
-      await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
     });
 
     it("withdraw tokens 9 user gas", async () => {
       await massApprove(9);
-      await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
     });
 
     it("withdraw tokens 10 user gas", async () => {
       await massApprove(10);
-      await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
     });
 
     it("withdraw tokens 11 user gas", async () => {
       await massApprove(11);
-      await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
     });
 
     it("withdraw tokens 12 user gas", async () => {
       await massApprove(12);
-      await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
     });
 
     it("withdraw tokens 13 user gas", async () => {
       await massApprove(13);
-      await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
     });
 
     it("withdraw tokens 14 user gas", async () => {
       await massApprove(14);
-      await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
     });
 
     it("withdraw tokens 15 user gas", async () => {
       await massApprove(15);
-      await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
     });
 
     it("withdraw tokens 16 user gas", async () => {
       await massApprove(16);
-      await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
+
+      await token.mint(user1.address, parseEther("1"));
+      await token.mint(user2.address, parseEther("1"));
+      console.log(await req.getAddressesForCollect(token.address));
+
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
+
+      console.log(await token.balanceOf(user1.address), user1.address);
+      console.log(await token.balanceOf(user2.address), user2.address);
     });
 
     it("withdraw tokens 17 user gas", async () => {
       await massApprove(17);
-      await snapshotGasCost(req.connect(masterAddress).withdraw(token.address));
+      await snapshotGasCost(
+        req
+          .connect(masterAddress)
+          .withdraw(
+            token.address,
+            await req.getAddressesForCollect(token.address)
+          )
+      );
     });
   });
 
