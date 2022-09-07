@@ -11,8 +11,6 @@ interface IReq {
   error CallerIsNotTheMasterAddress();
   error NewOwnerIsTheZeroAddress();
 
-  error WithdrawEtherFail();
-
   /// @notice return the owner of contract
   function owner() external view returns (address);
 
@@ -54,10 +52,4 @@ interface IReq {
   /// @dev this function can only be called if the msg.sender is master address
   /// array of users by `_token` address cannot be empty
   function withdraw(address _token, address[] calldata _addresses) external;
-
-  /// @notice withdraw all ether from this contract
-  ///
-  /// @dev this function can only be called if the msg.sender is master address
-  /// balance of this address MUST be greater than 0
-  function withdrawEther() external;
 }

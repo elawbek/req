@@ -131,45 +131,6 @@ describe("", () => {
     });
   });
 
-  describe("NativeCurrency", async () => {
-    beforeEach(async () => {
-      await req.connect(owner).addMasterAddress(masterAddress.address);
-      await req.connect(owner).addMasterAddress(masterAddress2.address);
-    });
-
-    it("Add and withdraw currency", async () => {
-      await expect(
-        req.connect(masterAddress).withdrawEther()
-      ).to.revertedWithoutReason();
-
-      await user1.sendTransaction({ to: req.address, value: parseEther("10") });
-      await user2.sendTransaction({ to: req.address, value: parseEther("10") });
-      await user3.sendTransaction({ to: req.address, value: parseEther("10") });
-      await user4.sendTransaction({ to: req.address, value: parseEther("10") });
-
-      expect(await ethers.provider.getBalance(req.address)).to.eq(
-        parseEther("40")
-      );
-
-      await expect(
-        req.connect(user1).withdrawEther()
-      ).to.revertedWithCustomError(req, "CallerIsNotTheMasterAddress");
-
-      await expect(() =>
-        req.connect(masterAddress).withdrawEther()
-      ).to.changeEtherBalance(masterAddress, parseEther("40"));
-    });
-
-    it("withdraw nativeCurrency gas", async () => {
-      await user1.sendTransaction({ to: req.address, value: parseEther("10") });
-      await user2.sendTransaction({ to: req.address, value: parseEther("10") });
-      await user3.sendTransaction({ to: req.address, value: parseEther("10") });
-      await user4.sendTransaction({ to: req.address, value: parseEther("10") });
-
-      await snapshotGasCost(req.connect(masterAddress).withdrawEther());
-    });
-  });
-
   describe("Token actions", async () => {
     beforeEach(async () => {
       await req.connect(owner).addMasterAddress(masterAddress.address);
@@ -447,26 +408,20 @@ describe("", () => {
     });
   });
 
-  it("test", async () => {
+  it("direct token transaction gas", async () => {
     await snapshotGasCost(
       token
         .connect(user1)
         .transfer(masterAddress.address, await token.balanceOf(user1.address))
     );
+  });
+
+  it("direct ether transaction gas", async () => {
     await snapshotGasCost(
-      token
-        .connect(user2)
-        .transfer(masterAddress.address, await token.balanceOf(user2.address))
-    );
-    await snapshotGasCost(
-      token
-        .connect(user3)
-        .transfer(masterAddress.address, await token.balanceOf(user3.address))
-    );
-    await snapshotGasCost(
-      token
-        .connect(user4)
-        .transfer(masterAddress.address, await token.balanceOf(user4.address))
+      user1.sendTransaction({
+        to: masterAddress.address,
+        value: parseEther("1"),
+      })
     );
   });
 });

@@ -101,16 +101,7 @@ npx hardhat run scripts/deploy.ts --network bnb_testnet
 function addMasterAddress(address _newMasterAddress)
 ```
 
-2. collection and withdrawal of native currency:
-
-- each address sends a native currency to this contract
-- after collecting the native currency, the master address can call the `withdrawEther` method and withdraw the entire accumulated balance to itself
-
-```solidity
-function withdrawEther()
-```
-
-3. withdrawal of tokens:
+2. withdrawal of tokens:
 
 - each address makes the maximum approve token to this contract and adds itself to the contract via the `addUser` method. The address passes a check that the approve on that contract is equal to the maximum approve and is written to the array of that token.
 

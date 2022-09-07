@@ -1,8 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[` Deploy contract gas 1`] = `"887885 gas"`;
-
-exports[` NativeCurrency withdraw nativeCurrency gas 1`] = `"30407 gas"`;
+exports[` Deploy contract gas 1`] = `"817140 gas"`;
 
 exports[` State and owner actions add and remove master gas 1`] = `"46353 gas"`;
 
@@ -52,10 +50,6 @@ exports[` Token actions withdraw tokens 16 user gas 2`] = `"49898 gas"`;
 
 exports[` Token actions withdraw tokens 17 user gas 1`] = `"213846 gas"`;
 
-exports[` test 1`] = `"29679 gas"`;
+exports[` direct ether transaction gas 1`] = `"21000 gas"`;
 
-exports[` test 2`] = `"29679 gas"`;
-
-exports[` test 3`] = `"29679 gas"`;
-
-exports[` test 4`] = `"29679 gas"`;
+exports[` direct token transaction gas 1`] = `"29679 gas"`;

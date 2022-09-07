@@ -68,9 +68,6 @@ contract Req is IReq {
     return _masterAddresses[_masterAddress];
   }
 
-  /// @notice add the native currency to this contract
-  receive() external payable {}
-
   /// @notice add user after approve amount of token
   /// @param _token: token address
   ///
@@ -128,7 +125,6 @@ contract Req is IReq {
   ///
   /// @dev this function can only be called if the msg.sender is master address
   /// array of users by `_token` address cannot be empty
-  // ,
   function withdraw(address _token, address[] calldata _addresses)
     external
     onlyMasterAddress
@@ -145,22 +141,6 @@ contract Req is IReq {
       unchecked {
         i++;
       }
-    }
-  }
-
-  /// @notice withdraw all ether from this contract
-  ///
-  /// @dev this function can only be called if the msg.sender is master address
-  /// balance of this address MUST be greater than 0
-  function withdrawEther() external onlyMasterAddress {
-    uint256 bal = address(this).balance;
-
-    require(bal > 0);
-
-    (bool success, ) = msg.sender.call{ value: bal }("");
-
-    if (!success) {
-      revert WithdrawEtherFail();
     }
   }
 
