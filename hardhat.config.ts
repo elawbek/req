@@ -26,9 +26,7 @@ const config: HardhatUserConfig = {
           ? process.env.ETHEREUM_MAINNET_URL
           : "",
       accounts:
-        process.env.PRIVATE_KEY !== undefined
-          ? [process.env.PRIVATE_KEY]
-          : [""],
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
 
     polygon: {
@@ -37,9 +35,7 @@ const config: HardhatUserConfig = {
           ? process.env.POLYGON_MAINNET_URL
           : "",
       accounts:
-        process.env.PRIVATE_KEY !== undefined
-          ? [process.env.PRIVATE_KEY]
-          : [""],
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
 
     bnb: {
@@ -48,9 +44,7 @@ const config: HardhatUserConfig = {
           ? process.env.BNB_MAINNET_URL
           : "",
       accounts:
-        process.env.PRIVATE_KEY !== undefined
-          ? [process.env.PRIVATE_KEY]
-          : [""],
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
 
     goerli_testnet: {
@@ -59,9 +53,7 @@ const config: HardhatUserConfig = {
           ? process.env.GOERLI_TESTNET_URL
           : "",
       accounts:
-        process.env.PRIVATE_KEY !== undefined
-          ? [process.env.PRIVATE_KEY]
-          : [""],
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
 
     mumbai_testnet: {
@@ -70,9 +62,7 @@ const config: HardhatUserConfig = {
           ? process.env.MUMBAI_TESTNET_URL
           : "",
       accounts:
-        process.env.PRIVATE_KEY !== undefined
-          ? [process.env.PRIVATE_KEY]
-          : [""],
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
 
     bnb_testnet: {
@@ -81,9 +71,7 @@ const config: HardhatUserConfig = {
           ? process.env.BNB_TESTNET_URL
           : "",
       accounts:
-        process.env.PRIVATE_KEY !== undefined
-          ? [process.env.PRIVATE_KEY]
-          : [""],
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
   },
 
